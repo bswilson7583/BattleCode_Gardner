@@ -4,7 +4,7 @@ import battlecode.common.*;
 
 import java.util.*;
 
-abstract class Robot {
+public abstract class Robot {
     static RobotController robotController = null;
     static RobotType robotType = null;
     static MapLocation spawnLocation = null;
@@ -12,8 +12,11 @@ abstract class Robot {
     static Team myTeam;
     static Team enemy;
 
+    public Robot() {
+    }
+
     public static void init(RobotController rc) throws GameActionException {
-        robotController = rc;
+        Robot.robotController = rc;
         random = new Random();
         robotType = robotController.getType();
         spawnLocation = robotController.getLocation();
@@ -25,8 +28,13 @@ abstract class Robot {
      * Returns a random Direction
      * * @return a random Direction
      */
-    static Direction randomDirection() {
-        return new Direction((float) Math.random() * 2 * (float) Math.PI);
+    public static Direction randomDirection() {
+
+              return new Direction((float) Math.random() * 2 * (float) Math.PI);
+    }
+
+    public static Direction randomFreeDirection() {
+        return new Direction(random.nextFloat() *  2 * (float) Math.PI);
     }
 
     /**
@@ -88,15 +96,16 @@ abstract class Robot {
      * @return True if the line of the bullet's path intersects with this robot's current position.
      */
     static boolean willCollideWithMe(BulletInfo bullet) {
-        MapLocation myLocation = robotController.getLocation();
+        MapLocation activeLocations = robotController.getLocation();
+
 
         // Get relevant bullet information
         Direction propagationDirection = bullet.dir;
         MapLocation bulletLocation = bullet.location;
 
         // Calculate bullet relations to this robot
-        Direction directionToRobot = bulletLocation.directionTo(myLocation);
-        float distToRobot = bulletLocation.distanceTo(myLocation);
+        Direction directionToRobot = bulletLocation.directionTo(activeLocations);
+        float distToRobot = bulletLocation.distanceTo(activeLocations);
         float theta = propagationDirection.radiansBetween(directionToRobot);
 
         // If theta > 90 degrees, then the bullet is traveling away from us and we can break early
@@ -113,6 +122,8 @@ abstract class Robot {
         return (perpendicularDist <= robotController.getType().bodyRadius);
     }
 
-    public void OnUpdate() {
+
+
+    public void OnUpdate() throws GameActionException {
     }
 }

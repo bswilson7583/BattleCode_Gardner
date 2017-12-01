@@ -1,6 +1,7 @@
 package examplefuncsplayer;
 import battlecode.common.*;
 
+@SuppressWarnings("ALL")
 public strictfp class RobotPlayer {
     static RobotController rc;
 
@@ -33,6 +34,7 @@ public strictfp class RobotPlayer {
         }
 	}
 
+    @SuppressWarnings("InfiniteLoopStatement")
     static void runArchon() throws GameActionException {
         System.out.println("I'm an archon!");
 
@@ -68,7 +70,8 @@ public strictfp class RobotPlayer {
         }
     }
 
-	static void runGardener() throws GameActionException {
+	@SuppressWarnings("InfiniteLoopStatement")
+    static void runGardener() throws GameActionException {
         System.out.println("I'm a gardener!");
 
         // The code you want your robot to perform every round should be in this loop
@@ -105,6 +108,7 @@ public strictfp class RobotPlayer {
         }
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     static void runSoldier() throws GameActionException {
         System.out.println("I'm an soldier!");
         Team enemy = rc.getTeam().opponent();
@@ -141,6 +145,7 @@ public strictfp class RobotPlayer {
         }
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     static void runLumberjack() throws GameActionException {
         System.out.println("I'm a lumberjack!");
         Team enemy = rc.getTeam().opponent();
